@@ -21,22 +21,34 @@ public class ViewEx extends View {
     Paint mPaint = new Paint();
     int[][] primTable = new int[7][7];  // 프림테이블
     int x=0, y=0;   //터치시 입력되는 x, y 좌표
-    int[][] xy = new int[2][7];
-    int c = 0;  //카운트(1)
+    int[][] xy = new int[2][7]; //xy[0][]: 점의 x좌표, xy[1][]: 점의 y좌표
+    int[] startXY = new int[2];
+    int[] endXY = new int[2];
+    int c = 0;  //카운트
     String result = "RESULT";    //버튼 이름
     Button button;
     MainActivity mainActivity;
 
     public ViewEx(Context context, AttributeSet attr){
         super(context, attr);
-        mPaint.setColor(Color.BLACK);   //그려질 색상 설정
-        mPaint.setStrokeWidth(30f);     //그려질 두께 설정
         mainActivity = (MainActivity)context;
+    }
+
+    private void ChangeStartPoint(MotionEvent event) {
+        x = (int)event.getX();
+        y = (int)event.getY();
+
+
+    }
+
+    private void ChangeEndPoint(MotionEvent event) {
+        x = (int)event.getX();
+        y = (int)event.getY();
+        this.invalidate();
     }
 
     @Override
     public void onDraw(Canvas canvas){
-        final Canvas mCanvas = canvas;  // 캔버스 생성
 
         canvas.drawColor(Color.WHITE);
         button = new Button(mainActivity);
@@ -46,26 +58,32 @@ public class ViewEx extends View {
         button.setText(result);
         ((ConstraintLayout)this.getParent()).addView(button);
 
-        mCanvas.drawColor(Color.WHITE);     //캔버스 색상설정
-
-            for (int i = 0; i < 7; i++) {       //터치한 곳에 점 찍기
-                mCanvas.drawRect(xy[0][i]-50, xy[1][i]+50, xy[0][i]+50, xy[1][i]-50, mPaint);
+        mPaint.setColor(Color.BLACK);   //그려질 색상 설정
+        mPaint.setStrokeWidth(30f);     //그려질 두께 설정
+        canvas.drawColor(Color.WHITE);     //캔버스 색상설정
+        for (int i = 0; i < 7; i++) {       //터치한 곳에 점 찍기
+            if(xy[0][i] != 0 && xy[1][i] != 0){
+                canvas.drawRect(xy[0][i]-20, xy[1][i]+20, xy[0][i]+20, xy[1][i]-20, mPaint);
             }
+        }
     }
 
     @Override
     public boolean onTouchEvent(MotionEvent event) { //터치시 점의 좌표 입력과 동시에 점배열, 선분배열에 값 저장
         super.onTouchEvent(event);
-        if (event.getAction() == MotionEvent.ACTION_DOWN) {
-            x = (int) event.getX();
-            y = (int) event.getY();
-            if (c < 7) {
-                xy[0][c] = x;
-                xy[1][c] = y;
-            }
-            c++;
+
+        switch (event.getAction()){
+
+            case MotionEvent.ACTION_DOWN:
+                if(c<7){
+                    xy[0][c] = (int) event.getX();
+                    xy[1][c] = (int) event.getY();
+                    c++;
+                    invalidate();
+                }else ChangeStartPoint(event); break;
+            case MotionEvent.ACTION_MOVE:
+            case MotionEvent.ACTION_UP: ChangeEndPoint(event); break;
         }
-        invalidate();
         return true;
     }
 }
