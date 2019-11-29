@@ -1,42 +1,51 @@
 package com.example.primalgorithm;
 
+import android.app.AlertDialog;
 import android.content.Context;
+import android.content.DialogInterface;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
-import android.graphics.Point;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.EditText;
 import android.widget.TextView;
-import android.widget.Toast;
-
 import androidx.constraintlayout.widget.ConstraintLayout;
 
-import org.w3c.dom.Text;
+
 
 public class ViewEx extends View {
 
     Paint mPaint = new Paint();
+    AlertDialog.Builder ad;
     int[][] primTable = new int[7][7];  // 프림테이블
     int x=0, y=0;   //터치시 입력되는 x, y 좌표
-    int[] nodeID = new int[7];
     int[][] xy = new int[2][7]; //xy[0][]: 점의 x좌표, xy[1][]: 점의 y좌표
-    int[][] startXYend = new int [22][4];   // [0]: 시작점의 x좌표, [1]: 시작점의 y좌표, [2]: 끝점의 x좌표, [3]: 끝점의 y좌표
+    int[][] startXYend = new int [22][6];   // [0]: 시작점의 x좌표, [1]: 시작점의 y좌표, [2]: 시작점의 노드번호, [3]: 끝점의 x좌표, [4]: 끝점의 y좌표, [5]: 끝점의 노드번호
     int c = 0;  //카운트
     int lineCount = 0;  // 선분개수
     String result = "RESULT";    //버튼 이름
+    String value;
+    int valueInt = 0;
     Boolean nodeClick = false;
+    Boolean lineClick = false;
     Button button;
     TextView[] nodeText = new TextView[7];
+    TextView[] lineText = new TextView[22];
     MainActivity mainActivity;
 
     public ViewEx(Context context, AttributeSet attr){
         super(context, attr);
         mainActivity = (MainActivity)context;
+        for(int i = 0; i < 7; i++){
+            for(int j = 0; j < 7; j++){
+                primTable[i][j] = 0;
+            }
+        }
     }
 
     private void ChangeStartPoint(int[][] xy, int i) {
@@ -46,11 +55,38 @@ public class ViewEx extends View {
         }
         startXYend[lineCount][0] = xy[0][i];
         startXYend[lineCount][1] = xy[1][i];
+        startXYend[lineCount][2] = i;
     }
 
     private void ChangeEndPoint(int[][] xy, int i) {
-        startXYend[lineCount][2] = xy[0][i];
-        startXYend[lineCount][3] = xy[1][i];
+
+        startXYend[lineCount][3] = xy[0][i];
+        startXYend[lineCount][4] = xy[1][i];
+        startXYend[lineCount][5] = i;
+
+        ad = new AlertDialog.Builder(mainActivity);
+        ad.setTitle("가중치 입력");
+        final EditText et = new EditText(mainActivity);
+        if(et.getParent() != null) ((ViewGroup)et.getParent()).removeView(et);
+        ad.setView(et);
+        ad.setPositiveButton("입력", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                value = et.getText().toString();
+                valueInt = Integer.parseInt(value);
+                primTable[startXYend[lineCount][2]][startXYend[lineCount][5]] = valueInt;
+                primTable[startXYend[lineCount][5]][startXYend[lineCount][2]] = valueInt;
+                makeLineText(lineCount);
+                dialogInterface.dismiss();
+            }
+        });
+        ad.setNegativeButton("취소", new DialogInterface.OnClickListener() {
+            @Override
+            public void onClick(DialogInterface dialogInterface, int i) {
+                dialogInterface.dismiss();
+            }
+        });
+        ad.show();
     }
 
     private void makeNodeText(int nodeTextCount){
@@ -62,6 +98,17 @@ public class ViewEx extends View {
         nodeText[nodeTextCount].setY(xy[1][nodeTextCount]-30);
         ((ConstraintLayout)this.getParent()).addView(nodeText[nodeTextCount]);
         if(nodeTextCount < 6) nodeTextCount++;
+    }
+
+    private void makeLineText(int lineTextCount){
+        lineText[lineTextCount] = new TextView(mainActivity);
+        ConstraintLayout.LayoutParams lp = new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
+        lineText[lineTextCount].setLayoutParams(lp);
+        lineText[lineTextCount].setText(Integer.toString(primTable[startXYend[lineTextCount][2]][startXYend[lineTextCount][5]]));
+        lineText[lineTextCount].setX((startXYend[lineTextCount][0]+startXYend[lineTextCount][3])/2-10);
+        lineText[lineTextCount].setY((startXYend[lineTextCount][1]+startXYend[lineTextCount][4])/2-30);
+        ((ConstraintLayout)this.getParent()).addView(lineText[lineTextCount]);
+        if(lineTextCount < 21) lineTextCount++;
     }
 
     @Override
@@ -80,14 +127,14 @@ public class ViewEx extends View {
         canvas.drawColor(Color.WHITE);     //캔버스 색상설정
         for (int i = 0; i < 7; i++) {       //터치한 곳에 점 찍기
             if(xy[0][i] != 0 && xy[1][i] != 0){
-                canvas.drawRect(xy[0][i]-30, xy[1][i]+30, xy[0][i]+30, xy[1][i]-30, mPaint);
+                canvas.drawRect(xy[0][i]-40, xy[1][i]+40, xy[0][i]+40, xy[1][i]-40, mPaint);
                 makeNodeText(i);
             }
         }
 
-        for(int j = 1; j < 22; j++){
-            if(startXYend[j][0] != 0 && startXYend[j][1] != 0 && startXYend[j][2] != 0 && startXYend[j][3] != 0){
-                canvas.drawLine(startXYend[j][0], startXYend[j][1], startXYend[j][2], startXYend[j][3], mPaint);
+        for(int j = 1; j < 22; j++){    // 선 긋기
+            if(startXYend[j][0] != 0 && startXYend[j][1] != 0 && startXYend[j][3] != 0 && startXYend[j][4] != 0){
+                canvas.drawLine(startXYend[j][0], startXYend[j][1], startXYend[j][3], startXYend[j][4], mPaint);
             }
         }
     }
@@ -101,8 +148,9 @@ public class ViewEx extends View {
         switch (event.getAction()){
             case MotionEvent.ACTION_DOWN:
                 for(int i = 0; i < 7; i++) {
-                    if (xy[0][i] - 30 <= x && xy[0][i] + 30 >= x && xy[1][i] - 30 <= y && xy[1][i] + 30 >= y) {
+                    if (xy[0][i] - 40 <= x && xy[0][i] + 40 >= x && xy[1][i] - 40 <= y && xy[1][i] + 40 >= y) {
                         nodeClick = true;
+                        lineClick = true;
                         ChangeStartPoint(xy, i);
                         break;
                     }
@@ -111,20 +159,25 @@ public class ViewEx extends View {
                     xy[0][c] = x;
                     xy[1][c] = y;
                     c++;
+                    lineClick = false;
                     invalidate();
                 }
                 nodeClick = false;
-            case MotionEvent.ACTION_MOVE:
+                return true;
+            case MotionEvent.ACTION_MOVE: return true;
             case MotionEvent.ACTION_UP:
+                if(lineClick){
                     for(int i = 0; i < 7; i++) {
-                        if (xy[0][i] - 30 <= x && xy[0][i] + 30 >= x && xy[1][i] - 30 <= y && xy[1][i] + 30 >= y) {
+                        if (xy[0][i] - 40 <= x && xy[0][i] + 40 >= x && xy[1][i] - 40 <= y && xy[1][i] + 40 >= y) {
                             ChangeEndPoint(xy, i);
                             invalidate();
                             break;
+                        }
                     }
+                    break;
                 }
-                break;
+                return true;
         }
-        return true;
+        return false;
     }
 }
