@@ -3,6 +3,7 @@ package com.example.primalgorithm;
 import android.app.AlertDialog;
 import android.content.Context;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.graphics.Canvas;
 import android.graphics.Color;
 import android.graphics.Paint;
@@ -14,12 +15,15 @@ import android.view.ViewGroup;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.TextView;
+
+import androidx.appcompat.app.AppCompatActivity;
 import androidx.constraintlayout.widget.ConstraintLayout;
 
 
 
 public class ViewEx extends View {
 
+    GlobalValue globalValue = new GlobalValue();
     Paint mPaint = new Paint();
     AlertDialog.Builder ad;
     int[][] primTable = new int[7][7];  // 프림테이블
@@ -41,11 +45,6 @@ public class ViewEx extends View {
     public ViewEx(Context context, AttributeSet attr){
         super(context, attr);
         mainActivity = (MainActivity)context;
-        for(int i = 0; i < 7; i++){
-            for(int j = 0; j < 7; j++){
-                primTable[i][j] = 0;
-            }
-        }
     }
 
     private void ChangeStartPoint(int[][] xy, int i) {
@@ -54,15 +53,21 @@ public class ViewEx extends View {
             lineCount++;
         }
         startXYend[lineCount][0] = xy[0][i];
+        globalValue.setStartXYend(lineCount, 0, xy[0][i]);
         startXYend[lineCount][1] = xy[1][i];
+        globalValue.setStartXYend(lineCount, 1, xy[1][i]);
         startXYend[lineCount][2] = i;
+        globalValue.setStartXYend(lineCount, 2, i);
     }
 
     private void ChangeEndPoint(int[][] xy, int i) {
 
         startXYend[lineCount][3] = xy[0][i];
+        globalValue.setStartXYend(lineCount, 3, xy[0][i]);
         startXYend[lineCount][4] = xy[1][i];
+        globalValue.setStartXYend(lineCount, 4, xy[1][i]);
         startXYend[lineCount][5] = i;
+        globalValue.setStartXYend(lineCount, 5, i);
 
         ad = new AlertDialog.Builder(mainActivity);
         ad.setTitle("가중치 입력");
@@ -75,7 +80,10 @@ public class ViewEx extends View {
                 value = et.getText().toString();
                 valueInt = Integer.parseInt(value);
                 primTable[startXYend[lineCount][2]][startXYend[lineCount][5]] = valueInt;
+                globalValue.setPrimTable(startXYend[lineCount][2], startXYend[lineCount][5], valueInt);
+                Log.d("ㄷㅊㅅㅇ", "dd12121 " + globalValue.getPrimTable(startXYend[lineCount][2], startXYend[lineCount][5]));
                 primTable[startXYend[lineCount][5]][startXYend[lineCount][2]] = valueInt;
+                globalValue.setPrimTable(startXYend[lineCount][5], startXYend[lineCount][2], valueInt);
                 makeLineText(lineCount);
                 dialogInterface.dismiss();
             }
@@ -137,6 +145,14 @@ public class ViewEx extends View {
                 canvas.drawLine(startXYend[j][0], startXYend[j][1], startXYend[j][3], startXYend[j][4], mPaint);
             }
         }
+
+        button.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(mainActivity, PrimTable.class);
+                mainActivity.startActivity(intent);
+            }
+        });
     }
 
     @Override
@@ -157,7 +173,9 @@ public class ViewEx extends View {
                 }
                 if(!nodeClick && c <7){
                     xy[0][c] = x;
+                    globalValue.setXY(0, c, x);
                     xy[1][c] = y;
+                    globalValue.setXY(1, c, y);
                     c++;
                     lineClick = false;
                     invalidate();
