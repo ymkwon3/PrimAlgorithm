@@ -29,7 +29,7 @@ public class ViewEx extends View {
     int[][] primTable = new int[7][7];  // 프림테이블
     int x=0, y=0;   //터치시 입력되는 x, y 좌표
     int[][] xy = new int[2][7]; //xy[0][]: 점의 x좌표, xy[1][]: 점의 y좌표
-    int[][] startXYend = new int [22][6];   // [0]: 시작점의 x좌표, [1]: 시작점의 y좌표, [2]: 시작점의 노드번호, [3]: 끝점의 x좌표, [4]: 끝점의 y좌표, [5]: 끝점의 노드번호
+    int[][] startXYend = new int [21][6];   // [0]: 시작점의 x좌표, [1]: 시작점의 y좌표, [2]: 시작점의 노드번호, [3]: 끝점의 x좌표, [4]: 끝점의 y좌표, [5]: 끝점의 노드번호
     int c = 0;  //카운트
     int lineCount = 0;  // 선분개수
     String result = "RESULT";    //버튼 이름
@@ -39,7 +39,7 @@ public class ViewEx extends View {
     Boolean lineClick = false;
     Button button;
     TextView[] nodeText = new TextView[7];
-    TextView[] lineText = new TextView[22];
+    TextView[] lineText = new TextView[21];
     MainActivity mainActivity;
 
     public ViewEx(Context context, AttributeSet attr){
@@ -48,7 +48,7 @@ public class ViewEx extends View {
     }
 
     private void ChangeStartPoint(int[][] xy, int i) {
-        if(lineCount < 21){
+        if(lineCount < 20){
             Log.d("123", "Log.= " + lineCount);
             lineCount++;
         }
@@ -101,7 +101,7 @@ public class ViewEx extends View {
         nodeText[nodeTextCount] = new TextView(mainActivity);
         ConstraintLayout.LayoutParams lp2 = new ConstraintLayout.LayoutParams(ViewGroup.LayoutParams.WRAP_CONTENT, ViewGroup.LayoutParams.WRAP_CONTENT);
         nodeText[nodeTextCount].setLayoutParams(lp2);
-        nodeText[nodeTextCount].setText(Integer.toString(nodeTextCount+1));
+        nodeText[nodeTextCount].setText(Integer.toString(nodeTextCount));
         nodeText[nodeTextCount].setX(xy[0][nodeTextCount]-10);
         nodeText[nodeTextCount].setY(xy[1][nodeTextCount]-30);
         ((ConstraintLayout)this.getParent()).addView(nodeText[nodeTextCount]);
@@ -116,7 +116,7 @@ public class ViewEx extends View {
         lineText[lineTextCount].setX((startXYend[lineTextCount][0]+startXYend[lineTextCount][3])/2-10);
         lineText[lineTextCount].setY((startXYend[lineTextCount][1]+startXYend[lineTextCount][4])/2-30);
         ((ConstraintLayout)this.getParent()).addView(lineText[lineTextCount]);
-        if(lineTextCount < 21) lineTextCount++;
+        if(lineTextCount < 20) lineTextCount++;
     }
 
     @Override
@@ -140,7 +140,7 @@ public class ViewEx extends View {
             }
         }
 
-        for(int j = 1; j < 22; j++){    // 선 긋기
+        for(int j = 0; j < 21; j++){    // 선 긋기
             if(startXYend[j][0] != 0 && startXYend[j][1] != 0 && startXYend[j][3] != 0 && startXYend[j][4] != 0){
                 canvas.drawLine(startXYend[j][0], startXYend[j][1], startXYend[j][3], startXYend[j][4], mPaint);
             }

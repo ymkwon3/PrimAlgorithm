@@ -1,0 +1,152 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    tools:context=".PrimTree">
+
+    <Button
+        android:id="@+id/next"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="next"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintHorizontal_bias="0.498"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TableLayout
+        android:layout_width="320dp"
+        android:layout_height="80dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent">
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:gravity="center"
+                android:text=" "
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/edge"/>
+
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/edge"
+                android:gravity="center"
+                android:text="0번" />
+
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/edge"
+                android:gravity="center"
+                android:text="1번" />
+
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/edge"
+                android:gravity="center"
+                android:text="2번" />
+
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/edge"
+                android:gravity="center"
+                android:text="3번" />
+
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/edge"
+                android:gravity="center"
+                android:text="4번" />
+
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/edge"
+                android:gravity="center"
+                android:text="5번" />
+
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/edge"
+                android:gravity="center"
+                android:text="6번" />
+        </TableRow>
+
+        <TableRow
+            android:layout_width="match_parent"
+            android:layout_height="match_parent" >
+
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/edge"
+                android:gravity="center"
+                android:text="Tree" />
+
+            <TextView
+                android:id="@+id/textView0"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/edge"
+                android:gravity="center"
+                android:text="0"/>
+
+            <TextView
+                android:id="@+id/textView1"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/edge"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/textView2"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/edge"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/textView3"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/edge"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/textView4"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/edge"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/textView5"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/edge"
+                android:gravity="center" />
+
+            <TextView
+                android:id="@+id/textView6"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/edge"
+                android:gravity="center" />
+        </TableRow>
+
+
+    </TableLayout>
+</androidx.constraintlayout.widget.ConstraintLayout>

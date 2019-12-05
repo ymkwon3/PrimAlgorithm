@@ -4,10 +4,12 @@ import androidx.annotation.Nullable;
 import androidx.appcompat.app.AppCompatActivity;
 
 import android.content.Context;
+import android.content.Intent;
 import android.os.Bundle;
 import android.util.AttributeSet;
 import android.util.Log;
 import android.view.View;
+import android.widget.Button;
 import android.widget.TextView;
 
 import org.w3c.dom.Text;
@@ -27,6 +29,15 @@ public class PrimTable extends AppCompatActivity {
                 Log.d("ㄷㅊㅅㅇ", "dd " + globalValue.getPrimTable(i, j));
             }
         }
+
+        Button next = (Button) findViewById(R.id.next);
+        next.setOnClickListener(new Button.OnClickListener(){
+            @Override
+            public void onClick(View v){
+                Intent intent = new Intent(PrimTable.this, PrimTableResult.class);
+                startActivity(intent);
+            }
+        });
     }
 
 }

@@ -6,25 +6,16 @@
     android:layout_height="match_parent"
     tools:context=".PrimTable">
 
-    <Button
-        android:id="@+id/button"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:text="left"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.003"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
     <Button
-        android:id="@+id/button2"
+        android:id="@+id/next"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="right"
+        android:text="next"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintHorizontal_bias="0.987"
+        app:layout_constraintHorizontal_bias="0.498"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="@+id/button" />
+        app:layout_constraintTop_toTopOf="parent" />
 
     <TableLayout
         android:layout_width="320dp"
@@ -48,51 +39,51 @@
             <TextView
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:gravity="center"
                 android:background="@drawable/edge"
+                android:gravity="center"
+                android:text="0번" />
+
+            <TextView
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:background="@drawable/edge"
+                android:gravity="center"
                 android:text="1번" />
 
             <TextView
-                android:gravity="center"
-                android:text="2번"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/edge"/>
+                android:background="@drawable/edge"
+                android:gravity="center"
+                android:text="2번" />
 
             <TextView
-                android:gravity="center"
-                android:text="3번"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/edge" />
+                android:background="@drawable/edge"
+                android:gravity="center"
+                android:text="3번" />
 
             <TextView
-                android:gravity="center"
-                android:text="4번"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/edge" />
+                android:background="@drawable/edge"
+                android:gravity="center"
+                android:text="4번" />
 
             <TextView
-                android:gravity="center"
-                android:text="5번"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/edge"/>
+                android:background="@drawable/edge"
+                android:gravity="center"
+                android:text="5번" />
 
             <TextView
-                android:gravity="center"
-                android:text="6번"
                 android:layout_width="40dp"
                 android:layout_height="40dp"
-                android:background="@drawable/edge"/>
-
-            <TextView
+                android:background="@drawable/edge"
                 android:gravity="center"
-                android:text="7번"
-                android:layout_width="40dp"
-                android:layout_height="40dp"
-                android:background="@drawable/edge"/>
+                android:text="6번" />
         </TableRow>
 
         <TableRow
@@ -104,7 +95,7 @@
                 android:layout_height="40dp"
                 android:background="@drawable/edge"
                 android:gravity="center"
-                android:text="1번" />
+                android:text="0번" />
 
             <TextView
                 android:id="@+id/textView00"
@@ -165,7 +156,7 @@
                 android:layout_height="40dp"
                 android:background="@drawable/edge"
                 android:gravity="center"
-                android:text="2번" />
+                android:text="1번" />
 
             <TextView
                 android:id="@+id/textView10"
@@ -226,7 +217,7 @@
                 android:layout_height="40dp"
                 android:background="@drawable/edge"
                 android:gravity="center"
-                android:text="3번" />
+                android:text="2번" />
 
             <TextView
                 android:id="@+id/textView20"
@@ -287,7 +278,7 @@
                 android:layout_height="40dp"
                 android:background="@drawable/edge"
                 android:gravity="center"
-                android:text="4번" />
+                android:text="3번" />
 
             <TextView
                 android:id="@+id/textView30"
@@ -348,7 +339,7 @@
                 android:layout_height="40dp"
                 android:background="@drawable/edge"
                 android:gravity="center"
-                android:text="5번" />
+                android:text="4번" />
 
             <TextView
                 android:id="@+id/textView40"
@@ -409,7 +400,7 @@
                 android:layout_height="40dp"
                 android:background="@drawable/edge"
                 android:gravity="center"
-                android:text="6번" />
+                android:text="5번" />
 
             <TextView
                 android:id="@+id/textView50"
@@ -470,7 +461,7 @@
                 android:layout_height="40dp"
                 android:background="@drawable/edge"
                 android:gravity="center"
-                android:text="7번" />
+                android:text="6번" />
 
             <TextView
                 android:id="@+id/textView60"
